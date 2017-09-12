@@ -34,7 +34,7 @@ class Index extends Component {
             </Menu.Item>
 
             <Menu.Item key="5">
-              <Icon type="user-add"/> Crear Servicio
+              <Link to="/service"><Icon type="user-add"/> Crear Servicio </Link>
             </Menu.Item>
             
             <SubMenu key="sub1" title={<span><Icon type="appstore" /><span>Servicios</span></span>}>
