@@ -19,7 +19,6 @@ class Service extends Component {
         this.props.form.validateFieldsAndScroll((err, values) => {
             if (!err) {
 
-            	console.log(values);
 				let data = {
 				  method: 'POST',
 				  mode: 'no-cors',
@@ -34,13 +33,16 @@ class Service extends Component {
 				console.log('Received values of form: ', values);
 
 				return fetch('http://localhost:8080/syndesi/connect', data)
-				       .then((response) => {
-				       		console.log(response)
-					        return response
-					    })
-						.then((data) => {
-							console.log(data)
-						}) 
+				       	.then(function(response) {  
+							return response.text();  
+						})  
+						.then(function(text) {  
+							console.log('Request successful', text);  
+						})  
+						.catch(function(error) {  
+							console.log('Request failed', error)  
+						});
+
             }
         });
     }
