@@ -19,10 +19,12 @@ class Service extends Component {
         this.props.form.validateFieldsAndScroll((err, values) => {
             if (!err) {
 
+            	console.log(values);
 				let data = {
 				  method: 'POST',
+				  mode: 'no-cors',
 				  headers: {
-				    'Accept':       'application/json',
+				    'Accept': 'application/json',
 				    'Content-Type': 'application/json',
 				  },
 				  body: JSON.stringify(values),
@@ -33,11 +35,11 @@ class Service extends Component {
 
 				return fetch('http://localhost:8080/syndesi/connect', data)
 				       .then((response) => {
-					        return response.json()
+				       		console.log(response)
+					        return response
 					    })
 						.then((data) => {
-							this.setState({ dataBase: data })
-							console.log(this.dataBase)
+							console.log(data)
 						}) 
             }
         });
@@ -129,7 +131,7 @@ class Service extends Component {
                         label="Tipo de BD"
                         hasFeedback
                     >
-                        {getFieldDecorator('typeBD', {
+                        {getFieldDecorator('type', {
 				            rules: [{ required: true, message: 'Por favor, seleccione el tipo de base de datos' }],
 				        })(
 				            <Select placeholder="Selecciona el tipo">
@@ -146,7 +148,7 @@ class Service extends Component {
                         label="Nombre BD"
                         hasFeedback
                     >
-                        {getFieldDecorator('baseName', {
+                        {getFieldDecorator('name', {
                             rules: [{
                                 required: true, message: 'Por favor, digite el nombre de de la base de datos',
                             }],
