@@ -9,6 +9,7 @@ import Index from './views/Index/Index.js';
 import Home from './views/Home/Home.js';
 import Login from './views/Login/Login.js';
 import Register from './views/Register/Register.js';
+import Service from './components/Service/Service.js';
 
 const history = createBrowserHistory();
 
@@ -23,6 +24,7 @@ export default class AppRoutes extends Component{
 						<Route exact path='/home' name="Home" component={Home}/>
 						<Route exact path='/login' name="Home" component={Login}/>
 						<Route exact path='/register' name="Home" component={Register}/>
+						<Route exact path='/service' name="Home" component={Service}/>
 					</Switch>
 				</HashRouter>
 			</App>
