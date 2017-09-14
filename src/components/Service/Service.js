@@ -1,27 +1,34 @@
 import React, {Component} from 'react';
-import { Form, Input, Icon, Button, Select } from 'antd';
+import { Form, Input, Icon, Button, Select, Collapse, Col, Row, } from 'antd';
 import './Service.css'
 
 const FormItem = Form.Item;
 const Option = Select.Option;
+const Panel = Collapse.Panel;
 
 function hasErrors(fieldsError) {
   return Object.keys(fieldsError).some(field => fieldsError[field]);
 }
 
 class Service extends Component {
-    state = {
-        dataBase: [],
-    };
 
-    handleSubmit = (e) => {
+	constructor(props) {
+        super(props);
+        this.state = {
+            dataBase: [], name: "aloha",
+            tables: null
+        };
+        this.handleSubmit = this.handleSubmit.bind(this);
+
+    }
+
+    handleSubmit (e) {
         e.preventDefault();
         this.props.form.validateFieldsAndScroll((err, values) => {
             if (!err) {
 
 				let data = {
 				  method: 'POST',
-				  mode: 'no-cors',
 				  headers: {
 				    'Accept': 'application/json',
 				    'Content-Type': 'application/json',
@@ -30,21 +37,38 @@ class Service extends Component {
 				 
 				}
 				
-				console.log('Received values of form: ', values);
-
 				return fetch('http://localhost:8080/syndesi/connect', data)
 				       	.then(function(response) {  
-							return response.text();  
+							return response.json();  
 						})  
-						.then(function(text) {  
-							console.log('Request successful', text);  
-						})  
+						.then(function(database) {  
+							this.setState({
+                                dataBase: database
+                            });
+
+                            this.dataBase(database);
+                            console.log(this.state.dataBase);
+ 
+						}.bind(this))  
 						.catch(function(error) {  
 							console.log('Request failed', error)  
 						});
-
             }
         });
+    }
+
+    dataBase(data){
+
+        this.setState({
+            tables: data.tables.map(child => 
+                <Collapse key={child}>   
+                    <Panel header={child.table_name}>
+                        {child.columns } <Button type="primary" shape="circle" icon="plus"/>
+                     
+                    </Panel>
+                </Collapse>
+                )
+            })
     }
 
     render() {
@@ -73,6 +97,8 @@ class Service extends Component {
                 },
             },
         };
+
+        
 
         return (
             <div className="App">
@@ -165,6 +191,15 @@ class Service extends Component {
                     </FormItem>
                 </Form>
 
+                <Row type="flex">
+                    <Col className="gutter-row" span={7}>
+
+                        <h3> Tablas </h3>
+
+                        { this.state.tables } 
+
+                    </Col>
+                </Row>
             </div>
         );
     }
