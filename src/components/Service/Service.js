@@ -1,11 +1,40 @@
-import React, {Component} from 'react';
-import { Form, Input, Icon, Button, Select, Collapse, Col, Row, } from 'antd';
-import './Service.css'
+import React, { Component } from 'react';
+import { Form, Input, Icon, Button, Select, Collapse, Col, Row, Menu, Table} from 'antd';
+import { Link } from 'react-router-dom';
+import './Service.css' 
+import logo from '../../img/logo.png'  
+
 
 const FormItem = Form.Item;
 const Option = Select.Option;
 const Panel = Collapse.Panel;
 const lo = require('lodash');
+const { SubMenu } = Menu;
+
+const columns_recurso = [
+    {
+        title: 'Name',
+        dataIndex: 'namegroup',
+        key: 'namegroup',
+        render: text => <a href="#">{text}</a>,
+    },
+    {
+        title: 'Action',
+        key: 'action',
+        render: (text, record) => (
+            <span>
+            <a href="#">Action 一 {record.name}</a>
+            <span className="ant-divider" />
+            <a href="#">Delete</a>
+            <span className="ant-divider" />
+            <a href="#" className="ant-dropdown-link">
+            More actions <Icon type="down" />
+            </a>
+            </span>
+        ),
+    }
+];
+
 
 function hasErrors(fieldsError) {
   return Object.keys(fieldsError).some(field => fieldsError[field]);
@@ -17,15 +46,38 @@ class Service extends Component {
         super(props);
         this.state = {
             api: {},
-            resource: []
+            resource: {},
         };
+
+        this.state.api.resources = [];
+        this.state.resource.namegroup = '';
+        this.state.resource.basepath = '';
+
+        this.addResource = this.addResource.bind(this);
+        this.onChangeResource = this.onChangeResource.bind(this);
     }
 
-
     componentWillMount(){
+        console.log(window.localStorage.getItem('tables'));
         this.setState({
             tables: JSON.parse(window.localStorage.getItem('tables'))
         })
+    }
+
+    onChangeResource (e) {
+        this.state.resource[e.target.name] = e.target.value;
+    }
+
+    addResource (e) {
+        var resource ={};
+
+        resource.basepath = this.state.resource.basepath;
+        resource.namegroup = this.state.resource.namegroup;
+        this.state.resource.namegroup = '';
+        this.state.resource.basepath = '';
+        this.state.api.resources.push(resource);
+        this.setState(this.state.api.resources);
+        this.setState(this.state.api.resource);
     }
 
     render() {
@@ -59,8 +111,35 @@ class Service extends Component {
 
         return (
             <div className="App">
+                <Menu mode="horizontal">
+                    <Menu.Item key="1">
+                      <img src={logo}/>
+                    </Menu.Item>
+
+                    <Menu.Item key="2">
+                      <Link to="/home"><Icon type="home"/> Inicio </Link> 
+                    </Menu.Item>
+
+                    <Menu.Item key="3">
+                      <Link to="/login"><Icon type="user"/> Iniciar Sesion </Link> 
+                    </Menu.Item>
+
+                    <Menu.Item key="4">
+                      <Link to="/register"><Icon type="mail"/> Registrarse </Link> 
+                    </Menu.Item>
+
+                    <Menu.Item key="5">
+                      <Link to="/service"><Icon type="user-add"/> Crear Servicio </Link>
+                    </Menu.Item>
+                    
+                    <SubMenu key="sub1" title={<span><Icon type="appstore" /><span>Servicios</span></span>}>
+                      <Menu.Item key="6">Mis Servicios</Menu.Item>
+                      <Menu.Item key="7">Monitoreo</Menu.Item>
+                    </SubMenu>
+                </Menu>
+
                 <br/>
-                <Form style={{width: '60%', margin: '0 auto'}} onSubmit={this.handleSubmit}>
+                <Form name="" style={{width: '60%', margin: '0 auto'}} onSubmit={this.handleSubmit}>
                     
                     <h2 className="titleForm"> <strong> Creacion de la API </strong> </h2>
                     <h3 className="titleForm"> Configuracion General </h3>
@@ -133,225 +212,64 @@ class Service extends Component {
                             <Input prefix={<Icon type="hdd" style={{ fontSize: 13 }} />} placeholder="Puerto" />
                         )}
                     </FormItem>
+                </Form>
 
-                    <h3 className="titleForm"> <strong> Recurso </strong> </h3>
-                    <br/>
-                    <FormItem
-                        {...formItemLayout}
-                        label="Nombre"
-                        hasFeedback>
+                <Form onSubmit={this.addResource}>
 
-                        {getFieldDecorator('namegroup', {
-                            rules: [{
-                                required: true, message: 'Por favor, digite el nombre del recurso',
-                            }],
-                        })(
-                            <Input prefix={<Icon type="hdd" style={{ fontSize: 13 }} />} placeholder="recurso" />
-                        )}
-                    </FormItem>
+                    <Row>
+                        <Col span={12}>
+                            <h3 className="titleForm"> <strong> Recurso </strong> </h3>
+                            <br/>
+                            <FormItem
+                                {...formItemLayout}
+                                label="Nombre"
+                                hasFeedback>
 
-                    <FormItem
-                        {...formItemLayout}
-                        label="Ruta"
-                        hasFeedback>
+                                {getFieldDecorator('namegroup', {
+                                    rules: [{
+                                        required: true, message: 'Por favor, digite el nombre del recurso',
+                                    }],
+                                })(
+                                    <Input prefix={<Icon type="hdd" style={{ fontSize: 13 }} />} 
+                                    placeholder="recurso"
+                                    name="namegroup" 
+                                    value={this.state.resource.namegroup} 
+                                    onChange={this.onChangeResource} />
+                                )}
+                            </FormItem>
 
-                        {getFieldDecorator('basepath', {
-                            rules: [{
-                                required: true, message: 'Por favor, digite el la ruta del recurso',
-                            }],
-                        })(
-                            <Input prefix={<Icon type="hdd" style={{ fontSize: 13 }} />} placeholder="/ejmplo" />
-                        )}
-                    </FormItem>
+                            <FormItem
+                                {...formItemLayout}
+                                label="Ruta"
+                                hasFeedback>
 
-                    <h3 className="titleForm"> <strong> Acciones del recurso </strong> </h3>
-                    <br/>
-                    <FormItem
-                        {...formItemLayout}
-                        label="Nombre"
-                        hasFeedback>
+                                {getFieldDecorator('basepath', {
+                                    rules: [{
+                                        required: true, message: 'Por favor, digite el la ruta del recurso',
+                                    }],
+                                })(
+                                    <Input prefix={<Icon type="hdd" style={{ fontSize: 13 }} />} 
+                                    placeholder="/ejemplo"
+                                    name="basepath" 
+                                    value={this.state.resource.basepath} 
+                                    onChange={this.onChangeResource} />
+                                )}
+                            </FormItem>
 
-                        {getFieldDecorator('name', {
-                            rules: [{
-                                required: true, message: 'Por favor, digite el nombre de la accion',
-                            }],
-                        })(
-                            <Input prefix={<Icon type="hdd" style={{ fontSize: 13 }} />} placeholder="accion" />
-                        )}
-                    </FormItem>
+                            <FormItem {...tailFormItemLayout}>
+                                <Button type="primary" 
+                                    onClick={this.addResource}>
+                                    Agregar
+                                </Button>
+                            </FormItem>
 
-                    <FormItem
-                        {...formItemLayout}
-                        label="Descripcion"
-                        hasFeedback>
+                        </Col>
+                        
+                        <Col span={12}>
+                            <Table columns={columns_recurso} dataSource={this.state.api.resources} />
+                        </Col>
+                    </Row>
 
-                        {getFieldDecorator('description', {
-                            rules: [{
-                                required: true, message: 'Por favor, digite el la descripcion del accion',
-                            }],
-                        })(
-                            <Input prefix={<Icon type="hdd" style={{ fontSize: 13 }} />} placeholder="descripcion" />
-                        )}
-                    </FormItem>
-
-                    <FormItem
-                        {...formItemLayout}
-                        label="Metodo"
-                        hasFeedback
-                    >
-                        {getFieldDecorator('method', {
-                            rules: [{ required: true, message: 'Por favor, seleccione el metodo de la accion' }],
-                        })(
-                            <Select placeholder="Selecciona el metodo">
-                              <Option value="POST">POST</Option>
-                              <Option value="GET">GET</Option>
-                              <Option value="PUT">PUT</Option>
-                              <Option value="DELETE">DELETE</Option>
-                            </Select>
-                        )}
-                    </FormItem>
-
-                    <FormItem
-                        {...formItemLayout}
-                        label="Ruta"
-                        hasFeedback>
-
-                        {getFieldDecorator('route', {
-                            rules: [{
-                                required: true, message: 'Por favor, digite el la ruta de la accion',
-                            }],
-                        })(
-                            <Input prefix={<Icon type="hdd" style={{ fontSize: 13 }} />} placeholder="/miruta" />
-                        )}
-                    </FormItem>
-
-                    <h3 className="titleForm"> <strong> Parametros de la accion </strong> </h3>
-                    <br/>
-                    <FormItem
-                        {...formItemLayout}
-                        label="Nombre"
-                        hasFeedback>
-
-                        {getFieldDecorator('name', {
-                            rules: [{
-                                required: true, message: 'Por favor, digite el nombre del parametro',
-                            }],
-                        })(
-                            <Input prefix={<Icon type="hdd" style={{ fontSize: 13 }} />} placeholder="nombre" />
-                        )}
-                    </FormItem>
-
-                    <FormItem
-                        {...formItemLayout}
-                        label="Tipo"
-                        hasFeedback>
-
-                        {getFieldDecorator('type', {
-                            rules: [{
-                                required: true, message: 'Por favor, digite el tipo de parametro',
-                            }],
-                        })(
-                            <Input prefix={<Icon type="hdd" style={{ fontSize: 13 }} />} placeholder="boolean" />
-                        )}
-                    </FormItem>
-
-                    <FormItem
-                        {...formItemLayout}
-                        label="Descripcion"
-                        hasFeedback>
-
-                        {getFieldDecorator('type', {
-                            rules: [{
-                                required: true, message: 'Por favor, digite el una descripcion del parametro',
-                            }],
-                        })(
-                            <Input prefix={<Icon type="hdd" style={{ fontSize: 13 }} />} placeholder="boolean" />
-                        )}
-                    </FormItem>
-
-                    <h3 className="titleForm"> <strong> Payload </strong> </h3>
-                    <br/>
-
-                    <FormItem
-                        {...formItemLayout}
-                        label="Nombre"
-                        hasFeedback>
-
-                        {getFieldDecorator('name', {
-                            rules: [{
-                                required: true, message: 'Por favor, digite el nombre del payload',
-                            }],
-                        })(
-                            <Input prefix={<Icon type="hdd" style={{ fontSize: 13 }} />} placeholder="boolean" />
-                        )}
-                    </FormItem>
-
-                    <h3 className="titleForm"> <strong> Atributos del Payload </strong> </h3>
-                    <br/>
-
-                    <FormItem
-                        {...formItemLayout}
-                        label="Nombre"
-                        hasFeedback>
-
-                        {getFieldDecorator('name', {
-                            rules: [{
-                                required: true, message: 'Por favor, digite el nombre',
-                            }],
-                        })(
-                            <Input prefix={<Icon type="hdd" style={{ fontSize: 13 }} />} placeholder="nombre" />
-                        )}
-                    </FormItem>
-
-                    <FormItem
-                        {...formItemLayout}
-                        label="Tipo"
-                        hasFeedback>
-
-                        {getFieldDecorator('type', {
-                            rules: [{
-                                required: true, message: 'Por favor, digite el tipo',
-                            }],
-                        })(
-                            <Input prefix={<Icon type="hdd" style={{ fontSize: 13 }} />} placeholder="tipo" />
-                        )}
-                    </FormItem>
-
-                    <FormItem
-                        {...formItemLayout}
-                        label="Descripcion"
-                        hasFeedback>
-
-                        {getFieldDecorator('description', {
-                            rules: [{
-                                required: true, message: 'Por favor, digite el la descripcion',
-                            }],
-                        })(
-                            <Input prefix={<Icon type="hdd" style={{ fontSize: 13 }} />} placeholder="descripcion" />
-                        )}
-                    </FormItem>
-
-                    <FormItem
-                        {...formItemLayout}
-                        label="Requerido"
-                        hasFeedback
-                    >
-                        {getFieldDecorator('required', {
-                            rules: [{ required: true, message: 'Por favor, seleccione si el campo es requerido' }],
-                        })(
-                            <Select placeholder="Selecciona una opcion">
-                              <Option value="true">True</Option>
-                              <Option value="false">False</Option>
-                            </Select>
-                        )}
-                    </FormItem>
-
-                    <h3 className="titleForm"> <strong> Respuesta </strong> </h3>
-                    <br/>
-
-                    <FormItem {...tailFormItemLayout}>
-                        <Button type="primary" htmlType="submit" disabled={hasErrors(getFieldsError())}>Iniciar</Button>
-                    </FormItem>
                 </Form>
 
 

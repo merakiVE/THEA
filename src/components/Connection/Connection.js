@@ -1,11 +1,16 @@
 import React, {Component} from 'react';
 import {withRouter} from "react-router-dom";
-import { Form, Input, Icon, Button, Select, Collapse, Col, Row, } from 'antd';
+import { Form, Input, Icon, Button, Select, Collapse, Col, Row, Menu} from 'antd';
 import './Connection.css'
+import logo from '../../img/logo.png' 
+import { Link } from 'react-router-dom';
 
 const FormItem = Form.Item;
 const Option = Select.Option;
 const Panel = Collapse.Panel;
+const { SubMenu } = Menu;
+
+
 
 function hasErrors(fieldsError) {
   return Object.keys(fieldsError).some(field => fieldsError[field]);
@@ -35,13 +40,17 @@ class Service extends Component {
 				 
 				}
 				
-				return fetch('http://localhost:8080/syndesi/connect', data)
+				return fetch('http://localhost:8002/connect', data)
 				       	.then(function(response) {  
 							return response.json();  
 						})  
 						.then(function(database) {  
-                            window.localStorage.setItem('tables', JSON.stringify(database.tables))
-                            this.props.history.push("/service");
+                            if (!database.errors) {
+                                window.localStorage.setItem('tables', JSON.stringify(database.data.tables));
+                                console.log(window.localStorage.getItem('tables'));
+                                this.props.history.push("/service");
+                            }
+                            
  
 						}.bind(this))  
 						.catch(function(error) {  
@@ -79,7 +88,39 @@ class Service extends Component {
         };
 
         return (
+
             <div className="App">
+
+                <div className="">
+
+                  <Menu mode="horizontal">
+                    <Menu.Item key="1">
+                      <img src={logo}/>
+                    </Menu.Item>
+
+                    <Menu.Item key="2">
+                      <Link to="/home"><Icon type="home"/> Inicio </Link> 
+                    </Menu.Item>
+
+                    <Menu.Item key="3">
+                      <Link to="/login"><Icon type="user"/> Iniciar Sesion </Link> 
+                    </Menu.Item>
+
+                    <Menu.Item key="4">
+                      <Link to="/register"><Icon type="mail"/> Registrarse </Link> 
+                    </Menu.Item>
+
+                    <Menu.Item key="5">
+                      <Link to="/service"><Icon type="user-add"/> Crear Servicio </Link>
+                    </Menu.Item>
+                    
+                    <SubMenu key="sub1" title={<span><Icon type="appstore" /><span>Servicios</span></span>}>
+                      <Menu.Item key="6">Mis Servicios</Menu.Item>
+                      <Menu.Item key="7">Monitoreo</Menu.Item>
+                    </SubMenu>
+                  </Menu>
+                </div>
+
                 <br/>
                 <Form style={{width: '60%', margin: '0 auto'}} onSubmit={this.handleSubmit}>
                     
