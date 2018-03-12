@@ -1,0 +1,119 @@
+﻿﻿<div class="row">
+    <form class="col s12 card m6 push-m3" 
+          (ngSubmit)="initBuild(connect)" 
+          [formGroup]="connect" 
+          style="border: 1px solid #2196F3 !important; border-radius: 16px;">
+      <div class="row"> 
+        <div class="col s12 m12">
+          <h5 style="text-align: center">
+            <strong > Datos de la Base de Datos </strong> 
+          </h5>
+        </div>
+      </div>
+      <br><br>
+
+      <div class="row"> 
+        <div class="input-field col s12 m6 push-m3">
+          <i class="material-icons prefix">library_books</i>
+          <select placeholder="Tipo DB" formControlName="db" materialize="material_select" required >
+            <option *ngFor="let db of dbs" [value]="db.name">
+                {{ db.name }}
+            </option>
+          </select>
+          <label>Tipo DB</label>
+
+          <mat-error *ngIf="connect.get('db').hasError('required') && connect.get('db').touched">
+            Debe seleccionar una base de datos
+          </mat-error>
+        </div>
+      </div>
+  
+      <div class="row"> 
+        <div class="input-field col s12 m6 push-m3">
+          <i class="material-icons prefix">cloud_circle</i>
+          <input type="text" formControlName="host" required>
+          <label for="icon_prefix2">Host</label>
+          
+          <mat-error *ngIf="connect.get('host').hasError('required') && connect.get('host').touched">
+            Debe ingresar un host
+          </mat-error>
+        </div>
+      </div>
+
+      <div class="row"> 
+        <div class="input-field col s12 m6 push-m3">
+          <i class="material-icons prefix">call_split</i>
+          <input type="number" formControlName="port">
+          <label>Puerto</label>
+        </div>
+      </div>
+
+      <div class="row"> 
+          <div class="input-field col s12 m6 push-m3">
+            <i class="material-icons prefix">storage</i>
+            <input type="text" formControlName="name" required>
+            <label>Nombre BD</label>
+
+            <mat-error *ngIf="connect.get('name').hasError('required') && connect.get('name').touched">
+              Debe ingrear el nombre de la base de datos
+            </mat-error>
+          </div>
+        </div>
+
+      <div class="row"> 
+        <div class="input-field col s12 m6 push-m3">
+          <i class="material-icons prefix">wc</i>
+          <input type="text" formControlName="user" required>
+          <label>Usuario</label>
+
+          <mat-error *ngIf="connect.get('user').hasError('required') && connect.get('user').touched">
+            Debe ingresar el usuario
+          </mat-error>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="input-field col s12 m6 push-m3">
+          <i class="material-icons prefix">lock_outline</i>
+          <input type="password" formControlName="password" required>
+          <label>Contraseña</label>
+
+          <mat-error *ngIf="connect.get('password').hasError('required') && connect.get('password').touched"> 
+            Debe ingresar la contraseña
+          </mat-error>
+        </div>
+      </div>
+        
+      
+      <div class="row">
+        <div class="col s12 m12">
+          <div class="col s12 m4 push-m3">
+            <button class="btn btn-primary red">Cancelar</button>
+          </div>
+
+          <div class="col s12 m4 push-m3">
+              <button class="btn btn-primary blue">Iniciar</button>
+            </div>
+        </div>
+  
+        <div class="col s12 m4 pull-m2">
+          <div *ngIf="loading" class="preloader-wrapper small active">
+            <div class="spinner-layer spinner-red-only">
+              <div class="circle-clipper left">
+                <div class="circle"></div>
+              </div>
+  
+              <div class="gap-patch">
+                <div class="circle"></div>
+              </div>
+  
+              <div class="circle-clipper right">
+                <div class="circle"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+  
+    </form>
+  </div>

@@ -1,0 +1,72 @@
+<form novalidate (ngSubmit)="initBuild(api)" [formGroup]="api">
+  <mat-card>
+    <mat-grid-list cols="4" rowHeight="100px">
+      
+      <mat-grid-tile [colspan]="4" [rowspan]="1">
+        <h1> Datos Generales de la API </h1>
+      </mat-grid-tile>
+      <mat-grid-tile [colspan]="4" [rowspan]="1">
+        <mat-icon>library_books</mat-icon>
+        <mat-form-field style="padding: 10px;">
+          <mat-select placeholder="Tipo DB" formControlName="db" required>
+            <mat-option *ngFor="let db of dbs" [value]="db.name">
+            {{ db.name }}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="api.get('db').hasError('required') && api.get('db').touched">
+            Debe seleccionar una base de datos
+          </mat-error>
+        </mat-form-field>
+        
+        <mat-icon>cloud_circle</mat-icon>
+        <mat-form-field style="padding: 10px;">
+          <input matInput placeholder="Host" formControlName="host" required>
+          <mat-error *ngIf="api.get('host').hasError('required') && api.get('host').touched">
+            Debe ingresar un host
+          </mat-error>
+        </mat-form-field>
+        
+        <mat-icon>call_split</mat-icon>
+        <mat-form-field style="padding: 10px;">
+          <input matInput placeholder="Puerto" type="number" formControlName="port">
+        </mat-form-field>
+      </mat-grid-tile>
+
+      <mat-grid-tile [colspan]="4" [rowspan]="1">
+        <mat-icon>storage</mat-icon> 
+        <mat-form-field style="padding: 10px;">  
+          <input matInput placeholder="Nombre BD" formControlName="name" required>
+          <mat-error *ngIf="api.get('name').hasError('required') && api.get('name').touched">
+            Debe ingrear el nombre de la base de datos
+          </mat-error>
+        </mat-form-field>
+        
+        <mat-icon>wc</mat-icon>
+        <mat-form-field style="padding: 10px;">
+          <input matInput placeholder="Usuario" formControlName="user" required>
+          <mat-error *ngIf="api.get('user').hasError('required') && api.get('user').touched">
+            Debe ingresar el usuario
+          </mat-error>
+        </mat-form-field>
+        
+        <mat-icon>lock_outline</mat-icon>
+        <mat-form-field style="padding: 10px;">
+          <input matInput placeholder="Contraseña" type="password" formControlName="password" required>
+          <mat-error *ngIf="api.get('password').hasError('required') && api.get('password').touched"> 
+            Debe ingresar la contraseña
+          </mat-error>
+        </mat-form-field>
+      </mat-grid-tile>
+
+      <mat-grid-tile [colspan]="4" [rowspan]="1">                
+        <button mat-raised-button color="warn" style="margin: 10px;">
+          <mat-icon>clear</mat-icon>Cancelar
+        </button>
+
+        <button mat-raised-button color="primary" style="margin: 10px;" type="submit" [disabled]="api.invalid">
+          <mat-icon>play_for_work</mat-icon> Iniciar
+        </button>
+      </mat-grid-tile>
+    </mat-grid-list>
+  </mat-card>
+</form>
