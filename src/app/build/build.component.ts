@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
-import { Api } from '../_models/index';
+import { Api, Resource } from '../_models/index';
 
 
 @Component({
@@ -19,7 +20,8 @@ export class BuildComponent{
 	constructor(
 		private fb: FormBuilder, 
 		private router: Router,
-        private actiRouter: ActivatedRoute
+        private actiRouter: ActivatedRoute,
+        private toastr: ToastrService
     ) {
         this.title = 'buildion bd';
         this.actRouter = actiRouter;
@@ -35,17 +37,24 @@ export class BuildComponent{
 			title: ['', [Validators.required]],
 			descripcion: ['', [Validators.required]],
 			contact: this.fb.group({
-				name: ['', Validators.required],
-				email: ['', Validators.required]
+				name: [''],
+				email: ['']
 			}),
 			host: ['', [Validators.required]],
 			port: ['', [Validators.required]],
-			basePath:['', [Validators.required]]
+			basePath:['', [Validators.required]],
+            resource: ['', [Validators.required]],
+            accion: ['', [Validators.required]],
+            peticion: ['', [Validators.required]],
+            ruta: ['', [Validators.required]],
+            parametro: [''],
+            type: [''],
+            ejemplo:['']
     	});
     }
 
     initBuild({ value, valid }: { value: Api, valid: boolean }) {
-    	this.api.reset();
+        this.toastr.success('Generado exitosamente', 'Servicio');
   	}
  
 }

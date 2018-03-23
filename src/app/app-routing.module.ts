@@ -8,7 +8,7 @@ import { HomeComponent } from './home/home.component';
 const routes: Routes = [
     { path: '', component: HomeComponent },
     { path: 'connect', component: ConnectComponent },
-    { path: 'build:db', component: BuildComponent },
+    { path: 'build', component: BuildComponent },
     { path: '**', component:  HomeComponent}
 ];
 

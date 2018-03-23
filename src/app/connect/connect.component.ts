@@ -42,6 +42,6 @@ export class ConnectComponent {
 
     initBuild({ value, valid }: { value: Connect, valid: boolean }) {
     	this.connect.reset();
-        this.router.navigate(['/build', value.name]);
+        this.router.navigate(['/build']);
 	}
 }

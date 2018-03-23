@@ -1,72 +1,195 @@
-<form novalidate (ngSubmit)="initBuild(api)" [formGroup]="api">
-  <mat-card>
-    <mat-grid-list cols="4" rowHeight="100px">
+﻿<div class="row">
+    <form class="col s12 card m6 push-m3" 
+          (ngSubmit)="initBuild(api)" 
+          [formGroup]="api" 
+          style="border: 1px solid #2196F3 !important; border-radius: 16px;">
+      <div class="row"> 
+        <div class="col s12 m12">
+          <h5 style="text-align: center">
+            <strong > Datos Generales </strong> 
+          </h5>
+        </div>
+      </div>
       
-      <mat-grid-tile [colspan]="4" [rowspan]="1">
-        <h1> Datos Generales de la API </h1>
-      </mat-grid-tile>
-      <mat-grid-tile [colspan]="4" [rowspan]="1">
-        <mat-icon>library_books</mat-icon>
-        <mat-form-field style="padding: 10px;">
-          <mat-select placeholder="Tipo DB" formControlName="db" required>
-            <mat-option *ngFor="let db of dbs" [value]="db.name">
-            {{ db.name }}
-            </mat-option>
-          </mat-select>
-          <mat-error *ngIf="api.get('db').hasError('required') && api.get('db').touched">
-            Debe seleccionar una base de datos
+      <div class="row"> 
+        <div class="input-field col s12 m6 push-m3">
+          <i class="material-icons prefix">keyboard</i>
+          <input type="text" formControlName="name" required>
+          <label for="icon_prefix2">Nombre</label>
+          
+          <mat-error *ngIf="api.get('name').hasError('required') && api.get('name').touched">
+            Debe ingresar un Nombre
           </mat-error>
-        </mat-form-field>
-        
-        <mat-icon>cloud_circle</mat-icon>
-        <mat-form-field style="padding: 10px;">
-          <input matInput placeholder="Host" formControlName="host" required>
+        </div>
+      </div>
+
+      <div class="row"> 
+        <div class="input-field col s12 m6 push-m3">
+          <i class="material-icons prefix">title</i>
+          <input type="text" formControlName="title" required>
+          <label for="icon_prefix2">Titulo</label>
+          
+          <mat-error *ngIf="api.get('title').hasError('required') && api.get('title').touched">
+            Debe ingresar un Titulo
+          </mat-error>
+        </div>
+      </div>
+
+      <div class="row"> 
+        <div class="input-field col s12 m6 push-m3">
+          <i class="material-icons prefix">receipt</i>
+          <input type="text" formControlName="descripcion" required>
+          <label for="icon_prefix2">Descripcion</label>
+          
+          <mat-error *ngIf="api.get('descripcion').hasError('required') && api.get('descripcion').touched">
+            Debe ingresar una Descripcion
+          </mat-error>
+        </div>
+      </div>
+
+      <div class="row"> 
+        <div class="input-field col s12 m6 push-m3">
+          <i class="material-icons prefix">cloud_circle</i>
+          <input type="text" formControlName="host" required>
+          <label for="icon_prefix2">Host</label>
+          
           <mat-error *ngIf="api.get('host').hasError('required') && api.get('host').touched">
             Debe ingresar un host
           </mat-error>
-        </mat-form-field>
-        
-        <mat-icon>call_split</mat-icon>
-        <mat-form-field style="padding: 10px;">
-          <input matInput placeholder="Puerto" type="number" formControlName="port">
-        </mat-form-field>
-      </mat-grid-tile>
+        </div>
+      </div>
 
-      <mat-grid-tile [colspan]="4" [rowspan]="1">
-        <mat-icon>storage</mat-icon> 
-        <mat-form-field style="padding: 10px;">  
-          <input matInput placeholder="Nombre BD" formControlName="name" required>
-          <mat-error *ngIf="api.get('name').hasError('required') && api.get('name').touched">
-            Debe ingrear el nombre de la base de datos
-          </mat-error>
-        </mat-form-field>
-        
-        <mat-icon>wc</mat-icon>
-        <mat-form-field style="padding: 10px;">
-          <input matInput placeholder="Usuario" formControlName="user" required>
-          <mat-error *ngIf="api.get('user').hasError('required') && api.get('user').touched">
-            Debe ingresar el usuario
-          </mat-error>
-        </mat-form-field>
-        
-        <mat-icon>lock_outline</mat-icon>
-        <mat-form-field style="padding: 10px;">
-          <input matInput placeholder="Contraseña" type="password" formControlName="password" required>
-          <mat-error *ngIf="api.get('password').hasError('required') && api.get('password').touched"> 
-            Debe ingresar la contraseña
-          </mat-error>
-        </mat-form-field>
-      </mat-grid-tile>
+      <div class="row"> 
+        <div class="input-field col s12 m6 push-m3">
+          <i class="material-icons prefix">call_split</i>
+          <input type="number" formControlName="port">
+          <label>Puerto</label>
+        </div>
+      </div>
 
-      <mat-grid-tile [colspan]="4" [rowspan]="1">                
-        <button mat-raised-button color="warn" style="margin: 10px;">
-          <mat-icon>clear</mat-icon>Cancelar
-        </button>
+      <div class="row"> 
+        <div class="input-field col s12 m6 push-m3">
+          <i class="material-icons prefix">public</i>
+          <input type="text" formControlName="basePath" required>
+          <label for="icon_prefix2">Ruta/Url de acceso</label>
+          
+          <mat-error *ngIf="api.get('basePath').hasError('required') && api.get('basePath').touched">
+            Debe ingresar la url de acceso
+          </mat-error>
+        </div>
+      </div>
+      
+      <div class="row"> 
+        <div class="col s12 m12">
+          <h5 style="text-align: center">
+            <strong > Recursos </strong> 
+          </h5>
+        </div>
+      </div>
 
-        <button mat-raised-button color="primary" style="margin: 10px;" type="submit" [disabled]="api.invalid">
-          <mat-icon>play_for_work</mat-icon> Iniciar
-        </button>
-      </mat-grid-tile>
-    </mat-grid-list>
-  </mat-card>
-</form>
+      <div class="row"> 
+        <div class="input-field col s12 m6 push-m3">
+          <i class="material-icons prefix">keyboard</i>
+          <input type="text" formControlName="resource" required>
+          <label for="icon_prefix2">Nombre</label>
+          
+          <mat-error *ngIf="api.get('resource').hasError('required') && api.get('resource').touched">
+            Debe ingresar un Nombre
+          </mat-error>
+        </div>
+      </div>
+
+      <div class="row"> 
+        <div class="input-field col s12 m6 push-m3">
+          <i class="material-icons prefix">get_app</i>
+          <input type="text" formControlName="accion" required>
+          <label for="icon_prefix2">Accion</label>
+          
+          <mat-error *ngIf="api.get('accion').hasError('required') && api.get('accion').touched">
+            Debe ingresar la Accion
+          </mat-error>
+        </div>
+      </div>
+
+      <div class="row"> 
+        <div class="input-field col s12 m6 push-m3">
+          <i class="material-icons prefix">http</i>
+          <input type="text" formControlName="peticion" required>
+          <label for="icon_prefix2">Peticion</label>
+          
+          <mat-error *ngIf="api.get('peticion').hasError('required') && api.get('peticion').touched">
+            Debe ingresar un Peticion
+          </mat-error>
+        </div>
+      </div>
+
+      <div class="row"> 
+        <div class="input-field col s12 m6 push-m3">
+          <i class="material-icons prefix">public</i>
+          <input type="text" formControlName="ruta" required>
+          <label for="icon_prefix2">Ruta</label>
+          
+          <mat-error *ngIf="api.get('ruta').hasError('required') && api.get('ruta').touched">
+            Debe ingresar la Ruta
+          </mat-error>
+        </div>
+      </div>
+
+      <div class="row"> 
+        <div class="input-field col s12 m6 push-m3">
+          <i class="material-icons prefix">more</i>
+          <input type="text" formControlName="parametro" required>
+          <label for="icon_prefix2">Parametro</label>
+          
+        </div>
+      </div>
+  
+      <div class="row"> 
+        <div class="input-field col s12 m6 push-m3">
+          <i class="material-icons prefix">search</i>
+          <input type="text" formControlName="type" required>
+          <label for="icon_prefix2">Tipo</label>
+        </div>
+      </div>
+
+      <div class="row"> 
+        <div class="input-field col s12 m6 push-m3">
+          <i class="material-icons prefix">show_chart</i>
+          <input type="text" formControlName="ejemplo" required>
+          <label for="icon_prefix2">Ejemplo</label>
+          
+        </div>
+      </div>
+      
+      <div class="row">
+        <div class="col s12 m12">
+          <div class="col s12 m4 push-m3">
+            <button class="btn btn-primary red">Cancelar</button>
+          </div>
+
+          <div class="col s12 m4 push-m3">
+              <button class="btn btn-primary blue">Construir</button>
+            </div>
+        </div>
+  
+        <div class="col s12 m4 pull-m2">
+          <div *ngIf="loading" class="preloader-wrapper small active">
+            <div class="spinner-layer spinner-red-only">
+              <div class="circle-clipper left">
+                <div class="circle"></div>
+              </div>
+  
+              <div class="gap-patch">
+                <div class="circle"></div>
+              </div>
+  
+              <div class="circle-clipper right">
+                <div class="circle"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+  
+    </form>
+  </div>
