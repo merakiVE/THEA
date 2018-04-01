@@ -1,195 +1,182 @@
 ﻿<div class="row">
-    <form class="col s12 card m6 push-m3" 
-          (ngSubmit)="initBuild(api)" 
-          [formGroup]="api" 
-          style="border: 1px solid #2196F3 !important; border-radius: 16px;">
-      <div class="row"> 
-        <div class="col s12 m12">
-          <h5 style="text-align: center">
-            <strong > Datos Generales </strong> 
-          </h5>
-        </div>
-      </div>
-      
-      <div class="row"> 
-        <div class="input-field col s12 m6 push-m3">
-          <i class="material-icons prefix">keyboard</i>
-          <input type="text" formControlName="name" required>
-          <label for="icon_prefix2">Nombre</label>
-          
-          <mat-error *ngIf="api.get('name').hasError('required') && api.get('name').touched">
-            Debe ingresar un Nombre
-          </mat-error>
-        </div>
-      </div>
-
-      <div class="row"> 
-        <div class="input-field col s12 m6 push-m3">
-          <i class="material-icons prefix">title</i>
-          <input type="text" formControlName="title" required>
-          <label for="icon_prefix2">Titulo</label>
-          
-          <mat-error *ngIf="api.get('title').hasError('required') && api.get('title').touched">
-            Debe ingresar un Titulo
-          </mat-error>
-        </div>
-      </div>
-
-      <div class="row"> 
-        <div class="input-field col s12 m6 push-m3">
-          <i class="material-icons prefix">receipt</i>
-          <input type="text" formControlName="descripcion" required>
-          <label for="icon_prefix2">Descripcion</label>
-          
-          <mat-error *ngIf="api.get('descripcion').hasError('required') && api.get('descripcion').touched">
-            Debe ingresar una Descripcion
-          </mat-error>
-        </div>
-      </div>
-
-      <div class="row"> 
-        <div class="input-field col s12 m6 push-m3">
-          <i class="material-icons prefix">cloud_circle</i>
-          <input type="text" formControlName="host" required>
-          <label for="icon_prefix2">Host</label>
-          
-          <mat-error *ngIf="api.get('host').hasError('required') && api.get('host').touched">
-            Debe ingresar un host
-          </mat-error>
-        </div>
-      </div>
-
-      <div class="row"> 
-        <div class="input-field col s12 m6 push-m3">
-          <i class="material-icons prefix">call_split</i>
-          <input type="number" formControlName="port">
-          <label>Puerto</label>
-        </div>
-      </div>
-
-      <div class="row"> 
-        <div class="input-field col s12 m6 push-m3">
-          <i class="material-icons prefix">public</i>
-          <input type="text" formControlName="basePath" required>
-          <label for="icon_prefix2">Ruta/Url de acceso</label>
-          
-          <mat-error *ngIf="api.get('basePath').hasError('required') && api.get('basePath').touched">
-            Debe ingresar la url de acceso
-          </mat-error>
-        </div>
-      </div>
-      
-      <div class="row"> 
-        <div class="col s12 m12">
-          <h5 style="text-align: center">
-            <strong > Recursos </strong> 
-          </h5>
-        </div>
-      </div>
-
-      <div class="row"> 
-        <div class="input-field col s12 m6 push-m3">
-          <i class="material-icons prefix">keyboard</i>
-          <input type="text" formControlName="resource" required>
-          <label for="icon_prefix2">Nombre</label>
-          
-          <mat-error *ngIf="api.get('resource').hasError('required') && api.get('resource').touched">
-            Debe ingresar un Nombre
-          </mat-error>
-        </div>
-      </div>
-
-      <div class="row"> 
-        <div class="input-field col s12 m6 push-m3">
-          <i class="material-icons prefix">get_app</i>
-          <input type="text" formControlName="accion" required>
-          <label for="icon_prefix2">Accion</label>
-          
-          <mat-error *ngIf="api.get('accion').hasError('required') && api.get('accion').touched">
-            Debe ingresar la Accion
-          </mat-error>
-        </div>
-      </div>
-
-      <div class="row"> 
-        <div class="input-field col s12 m6 push-m3">
-          <i class="material-icons prefix">http</i>
-          <input type="text" formControlName="peticion" required>
-          <label for="icon_prefix2">Peticion</label>
-          
-          <mat-error *ngIf="api.get('peticion').hasError('required') && api.get('peticion').touched">
-            Debe ingresar un Peticion
-          </mat-error>
-        </div>
-      </div>
-
-      <div class="row"> 
-        <div class="input-field col s12 m6 push-m3">
-          <i class="material-icons prefix">public</i>
-          <input type="text" formControlName="ruta" required>
-          <label for="icon_prefix2">Ruta</label>
-          
-          <mat-error *ngIf="api.get('ruta').hasError('required') && api.get('ruta').touched">
-            Debe ingresar la Ruta
-          </mat-error>
-        </div>
-      </div>
-
-      <div class="row"> 
-        <div class="input-field col s12 m6 push-m3">
-          <i class="material-icons prefix">more</i>
-          <input type="text" formControlName="parametro" required>
-          <label for="icon_prefix2">Parametro</label>
-          
-        </div>
-      </div>
-  
-      <div class="row"> 
-        <div class="input-field col s12 m6 push-m3">
-          <i class="material-icons prefix">search</i>
-          <input type="text" formControlName="type" required>
-          <label for="icon_prefix2">Tipo</label>
-        </div>
-      </div>
-
-      <div class="row"> 
-        <div class="input-field col s12 m6 push-m3">
-          <i class="material-icons prefix">show_chart</i>
-          <input type="text" formControlName="ejemplo" required>
-          <label for="icon_prefix2">Ejemplo</label>
-          
-        </div>
-      </div>
-      
-      <div class="row">
-        <div class="col s12 m12">
-          <div class="col s12 m4 push-m3">
-            <button class="btn btn-primary red">Cancelar</button>
-          </div>
-
-          <div class="col s12 m4 push-m3">
-              <button class="btn btn-primary blue">Construir</button>
+    <div class="col s12 m3">
+        <div class="row"> 
+            <div class="col s12 m12">
+                <h5 style="text-align: center">
+                    <strong > Tablas </strong> 
+                </h5>
+                <hr>
             </div>
         </div>
-  
-        <div class="col s12 m4 pull-m2">
-          <div *ngIf="loading" class="preloader-wrapper small active">
-            <div class="spinner-layer spinner-red-only">
-              <div class="circle-clipper left">
-                <div class="circle"></div>
-              </div>
-  
-              <div class="gap-patch">
-                <div class="circle"></div>
-              </div>
-  
-              <div class="circle-clipper right">
-                <div class="circle"></div>
-              </div>
+        
+        <div class="row">
+            <ul materialize="collapsible" class="collapsible" data-collapsible="accordion">
+                <li *ngFor="let table of dataBase.data.tables">
+                    <div class="collapsible-header">
+                        <i class="material-icons">assignment</i>
+                        {{table.name}}
+                    </div>
+
+                    <div class="collapsible-body">
+                        <div *ngFor="let column of table.columns">
+                            <div class="chip">
+                                {{column.name}} -- {{column.data_type}}
+                            </div>
+                            <i class="material-icons">add_circle</i>
+                            <br>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+    
+    <div class="col s12 card m6">
+      <form 
+            (ngSubmit)="saveGeneralData(api)" 
+            [formGroup]="api" 
+            style="border: 1px solid #2196F3 !important; border-radius: 16px;">
+        <div class="row"> 
+          <div class="col s12 m12">
+            <h5 style="text-align: center">
+              <strong > Datos Generales </strong> 
+            </h5>
+          </div>
+        </div>
+        
+        <div class="row"> 
+          <div class="input-field col s12 m6">
+            <i class="material-icons prefix">keyboard</i>
+            <input type="text" formControlName="name" required>
+            <label for="icon_prefix2">Nombre</label>
+            
+            <mat-error *ngIf="api.get('name').hasError('required') && api.get('name').touched">
+              Debe ingresar un Nombre
+            </mat-error>
+          </div>
+
+          <div class="input-field col s12 m6">
+            <i class="material-icons prefix">title</i>
+            <input type="text" formControlName="title" required>
+            <label for="icon_prefix2">Titulo</label>
+            
+            <mat-error *ngIf="api.get('title').hasError('required') && api.get('title').touched">
+              Debe ingresar un Titulo
+            </mat-error>
+          </div>
+        </div>
+
+        <div class="row"> 
+          <div formGroupName="contact">
+            <div class="input-field col s12 m6">
+              <i class="material-icons prefix">contacts</i>
+              <input type="text" formControlName="name">
+              <label for="icon_prefix2">Contacto</label>
+            </div>
+
+            <div class="input-field col s12 m6">
+              <i class="material-icons prefix">contact_mail</i>
+              <input type="email" formControlName="email">
+              <label for="icon_prefix2">Email</label>
             </div>
           </div>
         </div>
-      </div>
-  
-    </form>
-  </div>
+
+        <div class="row">
+          <div class="input-field col s12 m8">
+            <i class="material-icons prefix">cloud_circle</i>
+            <input type="text" formControlName="host" required>
+            <label for="icon_prefix2">Host</label>
+            
+            <mat-error *ngIf="api.get('host').hasError('required') && api.get('host').touched">
+              Debe ingresar un host
+            </mat-error>
+          </div>
+
+          <div class="input-field col s12 m4">
+            <i class="material-icons prefix">call_split</i>
+            <input type="number" formControlName="port">
+            <label>Puerto</label>
+          </div>
+        </div>
+        
+        <div class="row">
+          <div class="input-field col s12 m6">
+            <i class="material-icons prefix">receipt</i>
+            <textarea id="descripcion" class="materialize-textarea" formControlName="description" required></textarea>
+            <label for="descripcion">Descripcion</label>
+            <mat-error *ngIf="api.get('description').hasError('required') && api.get('description').touched">
+              Debe ingresar una Descripcion
+            </mat-error>
+          </div>
+
+          <div class="input-field col s12 m6">
+            <i class="material-icons prefix">public</i>
+            <input type="text" formControlName="basePath" required>
+            <label for="icon_prefix2">Ruta/Url de acceso</label>
+            
+            <mat-error *ngIf="api.get('basePath').hasError('required') && api.get('basePath').touched">
+              Debe ingresar la url de acceso
+            </mat-error>
+          </div>
+        </div>     
+        
+        <div class="row">
+          <div class="col s12 m12">
+            <div class="col s12 m6" style="text-align: center">
+              <button class="btn btn-primary red">Cancelar</button>
+            </div>
+
+            <div class="col s12 m6" style="text-align: center">
+                <button class="btn btn-primary blue">Guardar</button>
+              </div>
+          </div>
+        </div>  
+      </form>
+    </div>
+
+    <div class="col s12 m3">
+        <div class="row"> 
+            <div class="col s12 m12">
+                <h5 style="text-align: center">
+                    <strong > API </strong> 
+                </h5>
+                <hr>
+            </div>
+        </div>
+        
+        <div class="row">
+            <ul materialize="collapsible" class="collapsible" data-collapsible="accordion">
+                <li>
+                    <div class="collapsible-header">
+                        <i class="material-icons">book</i>
+                        Datos Generales
+                    </div>
+                </li>
+
+                <li>
+                    <div class="collapsible-header">
+                        <i class="material-icons">collections</i>
+                        Recursos
+                    </div>
+                </li>
+
+                <li>
+                    <div class="collapsible-header">
+                        <i class="material-icons">http</i>
+                        Respuestas
+                    </div>
+                </li>
+
+                <li>
+                    <div class="collapsible-header">
+                        <i class="material-icons">format_line_spacing</i>
+                        Estructuras de datos
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+
+</div>

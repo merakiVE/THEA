@@ -14,4 +14,8 @@ export class NavComponent{
         this.title = 'Menu navigation';
     }
 
+    onBuildTramite(){
+    	window.open("http://localhost:9013", "_blank");
+	}
+
 }

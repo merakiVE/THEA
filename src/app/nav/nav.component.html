@@ -5,16 +5,16 @@
 
     <ul class="right hide-on-med-and-down">
       <li [routerLinkActive]="['active']">
-        <a [routerLink]="['/servicios']">
+        <a [routerLink]="['/connect']">
           <i class="material-icons left blue-text">assessment</i>
-          <span class="black-text"> Servicios </span>
+          <span class="black-text"> Generar Servicio </span>
         </a>
       </li>
 
       <li>
-        <a [routerLink]="['/tramites']">
+        <a (click)="onBuildTramite()">
           <i class="material-icons left blue-text">library_books</i>
-          <span class="black-text"> Tramites </span>
+          <span class="black-text"> Generar Tramite </span>
         </a>
       </li>
     </ul>
@@ -23,13 +23,13 @@
       <li [routerLinkActive]="['active']">
         <a [routerLink]="['/servicios']">
           <i class="material-icons left blue-text">assessment</i>
-          <span class="black-text"> Servicios </span>
+          <span class="black-text"> Generar Servicio </span>
         </a>
       </li>
       <li>
-        <a [routerLink]="['/tramites']">
+        <a (click)="onBuildTramite()">
           <i class="material-icons left blue-text">library_books</i>
-          <span class="black-text"> Tramites </span>
+          <span class="black-text"> Generar Tramite </span>
         </a>
       </li>
     </ul>

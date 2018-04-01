@@ -15,14 +15,14 @@
       <div class="row"> 
         <div class="input-field col s12 m6 push-m3">
           <i class="material-icons prefix">library_books</i>
-          <select placeholder="Tipo DB" formControlName="db" materialize="material_select" required >
+          <select placeholder="Tipo DB" formControlName="type" materialize="material_select" required >
             <option *ngFor="let db of dbs" [value]="db.name">
                 {{ db.name }}
             </option>
           </select>
           <label>Tipo DB</label>
 
-          <mat-error *ngIf="connect.get('db').hasError('required') && connect.get('db').touched">
+          <mat-error *ngIf="connect.get('type').hasError('required') && connect.get('type').touched">
             Debe seleccionar una base de datos
           </mat-error>
         </div>

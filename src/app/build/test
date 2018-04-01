@@ -1,0 +1,80 @@
+   <div class="col s12 m12">
+          <h5 style="text-align: center">
+            <strong > Recursos </strong> 
+          </h5>
+        </div>
+      </div>
+
+      <div class="row"> 
+        <div class="input-field col s12 m6">
+          <i class="material-icons prefix">keyboard</i>
+          <input type="text" formControlName="resource" required>
+          <label for="icon_prefix2">Nombre</label>
+          
+          <mat-error *ngIf="api.get('resource').hasError('required') && api.get('resource').touched">
+            Debe ingresar un Nombre
+          </mat-error>
+        </div>
+      </div>
+
+      <div class="row"> 
+        <div class="input-field col s12 m6">
+          <i class="material-icons prefix">get_app</i>
+          <input type="text" formControlName="accion" required>
+          <label for="icon_prefix2">Accion</label>
+          
+          <mat-error *ngIf="api.get('accion').hasError('required') && api.get('accion').touched">
+            Debe ingresar la Accion
+          </mat-error>
+        </div>
+      </div>
+
+      <div class="row"> 
+        <div class="input-field col s12 m6">
+          <i class="material-icons prefix">http</i>
+          <input type="text" formControlName="peticion" required>
+          <label for="icon_prefix2">Peticion</label>
+          
+          <mat-error *ngIf="api.get('peticion').hasError('required') && api.get('peticion').touched">
+            Debe ingresar un Peticion
+          </mat-error>
+        </div>
+      </div>
+
+      <div class="row"> 
+        <div class="input-field col s12 m6">
+          <i class="material-icons prefix">public</i>
+          <input type="text" formControlName="ruta" required>
+          <label for="icon_prefix2">Ruta</label>
+          
+          <mat-error *ngIf="api.get('ruta').hasError('required') && api.get('ruta').touched">
+            Debe ingresar la Ruta
+          </mat-error>
+        </div>
+      </div>
+
+      <div class="row"> 
+        <div class="input-field col s12 m6">
+          <i class="material-icons prefix">more</i>
+          <input type="text" formControlName="parametro" required>
+          <label for="icon_prefix2">Parametro</label>
+          
+        </div>
+      </div>
+  
+      <div class="row"> 
+        <div class="input-field col s12 m6">
+          <i class="material-icons prefix">search</i>
+          <input type="text" formControlName="type" required>
+          <label for="icon_prefix2">Tipo</label>
+        </div>
+      </div>
+
+      <div class="row"> 
+        <div class="input-field col s12 m6">
+          <i class="material-icons prefix">show_chart</i>
+          <input type="text" formControlName="ejemplo" required>
+          <label for="icon_prefix2">Ejemplo</label>
+          
+        </div>
+      </div>

@@ -3,7 +3,10 @@ import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms'
 import { Router, ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 
-import { Api, Resource } from '../_models/index';
+import { CommonDataService } from '../_services/commonData.service';
+import { BuildService } from '../_services/build.service';
+import { Api } from '../_models/api';
+import { Resource } from '../_models/resource';
 
 
 @Component({
@@ -16,12 +19,19 @@ export class BuildComponent{
   
 	public title:string;
 	public actRouter: any;
+    public dataBase = {
+        data: {},
+        errors: '',
+        message: ''
+    };
 
 	constructor(
 		private fb: FormBuilder, 
 		private router: Router,
         private actiRouter: ActivatedRoute,
-        private toastr: ToastrService
+        private toastr: ToastrService,
+        private commonDataService: CommonDataService,
+        private buildService: BuildService
     ) {
         this.title = 'buildion bd';
         this.actRouter = actiRouter;
@@ -35,26 +45,38 @@ export class BuildComponent{
 
 			name: ['', [Validators.required]],
 			title: ['', [Validators.required]],
-			descripcion: ['', [Validators.required]],
+			description: ['', [Validators.required]],
 			contact: this.fb.group({
 				name: [''],
 				email: ['']
 			}),
 			host: ['', [Validators.required]],
 			port: ['', [Validators.required]],
-			basePath:['', [Validators.required]],
-            resource: ['', [Validators.required]],
-            accion: ['', [Validators.required]],
-            peticion: ['', [Validators.required]],
-            ruta: ['', [Validators.required]],
-            parametro: [''],
-            type: [''],
-            ejemplo:['']
+			basePath:['', [Validators.required]]
     	});
+
+        this.commonDataService.getData$.subscribe(
+            response => {
+                this.dataBase = response;
+            },
+            error => {
+                this.router.navigate(['/connect']);
+            }
+        );
     }
 
-    initBuild({ value, valid }: { value: Api, valid: boolean }) {
-        this.toastr.success('Generado exitosamente', 'Servicio');
+    saveGeneralData({ value, valid }: { value: Api, valid: boolean }) {
+
+        this.buildService.buildApi(value).subscribe(
+            response => {
+                this.api.reset();
+            },
+            error => {
+                console.log(error);
+            }
+        );
+
+        this.toastr.success('Guardada exitosamente', 'Información');
   	}
  
 }
