@@ -32,7 +32,7 @@
     </div>
     
     <div class="col s12 card m6">
-      <form 
+      <form *ngIf="enableApi"
             (ngSubmit)="saveGeneralData(api)" 
             [formGroup]="api" 
             style="border: 1px solid #2196F3 !important; border-radius: 16px;">
@@ -48,7 +48,7 @@
           <div class="input-field col s12 m6">
             <i class="material-icons prefix">keyboard</i>
             <input type="text" formControlName="name" required>
-            <label for="icon_prefix2">Nombre</label>
+            <label class="active" for="icon_prefix2">Nombre</label>
             
             <mat-error *ngIf="api.get('name').hasError('required') && api.get('name').touched">
               Debe ingresar un Nombre
@@ -58,7 +58,7 @@
           <div class="input-field col s12 m6">
             <i class="material-icons prefix">title</i>
             <input type="text" formControlName="title" required>
-            <label for="icon_prefix2">Titulo</label>
+            <label class="active" for="icon_prefix2">Titulo</label>
             
             <mat-error *ngIf="api.get('title').hasError('required') && api.get('title').touched">
               Debe ingresar un Titulo
@@ -71,13 +71,13 @@
             <div class="input-field col s12 m6">
               <i class="material-icons prefix">contacts</i>
               <input type="text" formControlName="name">
-              <label for="icon_prefix2">Contacto</label>
+              <label class="active" for="icon_prefix2">Contacto</label>
             </div>
 
             <div class="input-field col s12 m6">
               <i class="material-icons prefix">contact_mail</i>
               <input type="email" formControlName="email">
-              <label for="icon_prefix2">Email</label>
+              <label class="active" for="icon_prefix2">Email</label>
             </div>
           </div>
         </div>
@@ -86,7 +86,7 @@
           <div class="input-field col s12 m8">
             <i class="material-icons prefix">cloud_circle</i>
             <input type="text" formControlName="host" required>
-            <label for="icon_prefix2">Host</label>
+            <label class="active" for="icon_prefix2">Host</label>
             
             <mat-error *ngIf="api.get('host').hasError('required') && api.get('host').touched">
               Debe ingresar un host
@@ -96,7 +96,7 @@
           <div class="input-field col s12 m4">
             <i class="material-icons prefix">call_split</i>
             <input type="number" formControlName="port">
-            <label>Puerto</label>
+            <label class="active">Puerto</label>
           </div>
         </div>
         
@@ -104,7 +104,7 @@
           <div class="input-field col s12 m6">
             <i class="material-icons prefix">receipt</i>
             <textarea id="descripcion" class="materialize-textarea" formControlName="description" required></textarea>
-            <label for="descripcion">Descripcion</label>
+            <label class="active" for="descripcion">Descripcion</label>
             <mat-error *ngIf="api.get('description').hasError('required') && api.get('description').touched">
               Debe ingresar una Descripcion
             </mat-error>
@@ -113,7 +113,7 @@
           <div class="input-field col s12 m6">
             <i class="material-icons prefix">public</i>
             <input type="text" formControlName="basePath" required>
-            <label for="icon_prefix2">Ruta/Url de acceso</label>
+            <label class="active" for="icon_prefix2">Ruta/Url de acceso</label>
             
             <mat-error *ngIf="api.get('basePath').hasError('required') && api.get('basePath').touched">
               Debe ingresar la url de acceso
@@ -133,6 +133,107 @@
           </div>
         </div>  
       </form>
+
+      <form *ngIf="enableResource"
+            (ngSubmit)="saveResource(resourceForm)" 
+            [formGroup]="resourceForm" 
+            style="border: 1px solid #2196F3 !important; border-radius: 16px;">
+        <div class="row"> 
+          <div class="col s12 m12">
+            <h5 style="text-align: center">
+              <strong > Recurso </strong> 
+            </h5>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="input-field col s12 m6">
+            <i class="material-icons prefix">keyboard</i>
+            <input type="text" formControlName="namegroup" required>
+            <label class="active" for="icon_prefix2">Nombre</label>
+            
+            <mat-error *ngIf="resourceForm.get('namegroup').hasError('required') && resourceForm.get('namegroup').touched">
+              Debe ingresar un Nombre
+            </mat-error>
+          </div>
+
+          <div class="input-field col s12 m6">
+            <i class="material-icons prefix">public</i>
+            <input type="text" formControlName="basePath" required>
+            <label class="active" for="icon_prefix2">Ruta de acceso</label>
+            
+            <mat-error *ngIf="resourceForm.get('basePath').hasError('required') && resourceForm.get('basePath').touched">
+              La ruta de acceso es requerida
+            </mat-error>
+          </div>          
+        </div>
+
+        <div class="row"> 
+          <div class="col s12 m12">
+            <h5 style="text-align: center">
+              <strong > Accion </strong> 
+            </h5>
+          </div>
+        </div>
+
+        <div class="row">
+          <div formGroupName="action">
+            <div class="row">
+              <div class="input-field col s12 m4">
+                <i class="material-icons prefix">keyboard</i>
+                <input type="text" formControlName="name" required>
+                <label class="active" for="icon_prefix2">Nombre</label>
+                
+                <mat-error *ngIf="resourceForm.get('action').get('name').hasError('required') && resourceForm.get('action').get('name').touched">
+                  Debe ingresar un Nombre
+                </mat-error>
+              </div>
+
+              <div class="input-field col s12 m4">
+                <i class="material-icons prefix">http</i>
+                <input type="text" formControlName="method" required>
+                <label class="active" for="icon_prefix2">method</label>
+                
+                <mat-error *ngIf="resourceForm.get('action').get('method').hasError('required') && resourceForm.get('action').get('method').touched">
+                  Debe ingresar el metodo
+                </mat-error>
+              </div>
+
+              <div class="input-field col s12 m4">
+                <i class="material-icons prefix">public</i>
+                <input type="text" formControlName="route" required>
+                <label class="active" for="icon_prefix2">Ruta de acceso</label>
+                
+                <mat-error *ngIf="resourceForm.get('action').get('route').hasError('required') && resourceForm.get('action').get('route').touched">
+                  Debe ingresar la ruta de acceso
+                </mat-error>
+              </div>
+              
+              
+            </div>
+            
+            <div class="row">
+              <div class="input-field col s12 m8">
+                <i class="material-icons prefix">receipt</i>
+                <textarea id="descripcion" class="materialize-textarea" formControlName="description" required></textarea>
+                <label class="active" for="descripcion">Descripcion</label>
+                <mat-error *ngIf="resourceForm.get('action').get('description').hasError('required') && resourceForm.get('action').get('description').touched">
+                  Debe ingresar una Descripcion
+                </mat-error>
+              </div>
+
+              <div class="input-field col s12 m4">
+                <i class="material-icons prefix">format_line_spacing</i>
+                <input type="text" formControlName="payload">
+                <label class="active" for="icon_prefix2">Payload</label>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </form>
+
+
     </div>
 
     <div class="col s12 m3">
@@ -147,28 +248,28 @@
         
         <div class="row">
             <ul materialize="collapsible" class="collapsible" data-collapsible="accordion">
-                <li>
+                <li (click)="enableBuilds('API')">
                     <div class="collapsible-header">
                         <i class="material-icons">book</i>
                         Datos Generales
                     </div>
                 </li>
 
-                <li>
+                <li (click)="enableBuilds('Resource')">
                     <div class="collapsible-header">
                         <i class="material-icons">collections</i>
                         Recursos
                     </div>
                 </li>
 
-                <li>
+                <li (click)="enableBuilds('Response')">
                     <div class="collapsible-header">
                         <i class="material-icons">http</i>
                         Respuestas
                     </div>
                 </li>
 
-                <li>
+                <li (click)="enableBuilds('Payload')">
                     <div class="collapsible-header">
                         <i class="material-icons">format_line_spacing</i>
                         Estructuras de datos

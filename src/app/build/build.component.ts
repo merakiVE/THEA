@@ -7,7 +7,7 @@ import { CommonDataService } from '../_services/commonData.service';
 import { BuildService } from '../_services/build.service';
 import { Api } from '../_models/api';
 import { Resource } from '../_models/resource';
-
+import { Template } from '../_models/template';
 
 @Component({
     moduleId: module.id,
@@ -24,6 +24,14 @@ export class BuildComponent{
         errors: '',
         message: ''
     };
+    public enableApi: boolean = true;
+    public enableResource: boolean = false;
+    public enablePayload: boolean = false;
+    public enableResponse: boolean = false;
+
+    public resource: Resource;
+    public resources: Resource[]= [];
+    public template: Template;
 
 	constructor(
 		private fb: FormBuilder, 
@@ -35,9 +43,14 @@ export class BuildComponent{
     ) {
         this.title = 'buildion bd';
         this.actRouter = actiRouter;
+        this.resource = new Resource();
     }
 
     api: FormGroup;
+    resourceForm: FormGroup;
+
+
+
 
     ngOnInit(){
 
@@ -55,6 +68,27 @@ export class BuildComponent{
 			basePath:['', [Validators.required]]
     	});
 
+        this.resourceForm = this.fb.group({
+
+            namegroup: ['', [Validators.required]],
+            basePath:['', [Validators.required]],
+            action: this.fb.group({
+                name: ['', [Validators.required]],
+                method: ['', [Validators.required]],
+                route: ['', [Validators.required]],
+                description: ['', [Validators.required]],
+                payload: ['']
+            }),
+            param: this.fb.group({
+                name: ['', [Validators.required]],
+                type: ['', [Validators.required]],
+                description: ['', [Validators.required]],
+            }),
+            response: this.fb.group({
+                name: ['', [Validators.required]]
+            })
+        });
+
         this.commonDataService.getData$.subscribe(
             response => {
                 this.dataBase = response;
@@ -67,6 +101,8 @@ export class BuildComponent{
 
     saveGeneralData({ value, valid }: { value: Api, valid: boolean }) {
 
+        this.template.api = value;
+
         this.buildService.buildApi(value).subscribe(
             response => {
                 this.api.reset();
@@ -76,7 +112,52 @@ export class BuildComponent{
             }
         );
 
-        this.toastr.success('Guardada exitosamente', 'Información');
+        this.toastr.success('Guardada exitosamente', 'Data');
   	}
+
+    saveResource({ value, valid }: { value: any, valid: boolean }) {
+
+        this.resource.namegroup = value.namegroup;
+        this.resource.basepath = value.basepath;
+        
+        this.template.resources.push(this.resource);
+
+        this.toastr.success('Guardado exitosamente', 'Recurso');
+
+    }
+
+    enableBuilds(modulo) {
+
+        switch (modulo) {                
+            case "Resource":
+                this.enableApi = false;
+                this.enableResource = true;
+                this.enablePayload = false;
+                this.enableResponse = false;
+                break;
+
+            case "Payload":
+                this.enableApi = false;
+                this.enableResource = false;
+                this.enablePayload = true;
+                this.enableResponse = false;
+                break;
+
+            case "Response":
+                this.enableApi = false;
+                this.enableResource = false;
+                this.enablePayload = false;
+                this.enableResponse = true;
+                break;
+
+            default:
+                this.enableApi = true;
+                this.enableResource = false;
+                this.enablePayload = false;
+                this.enableResponse = false;
+                break;
+        }
+
+    }
  
 }
